@@ -10,11 +10,13 @@ class ProductController extends Controller
     public function index()
     {
         $products=\App\Product::all();
-        return view('product.index',compact('products'));
+        $catagories=\App\Catagory::all();
+        return view('product.index',compact('products', 'catagories'));
     }
     public function create()
     {
-        return view('product.create');
+        $catagories=\App\Catagory::all();
+        return view('product.create', compact('catagories'));
     }
     public function store(Request $request)
     {
@@ -39,7 +41,8 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = \App\Product::find($id);
-        return view('product.edit',compact('product','id'));
+        $catagories=\App\Catagory::all();
+        return view('product.edit',compact('product', 'catagories', 'id'));
     }
     public function update(Request $request, $id)
     {

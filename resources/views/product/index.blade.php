@@ -5,13 +5,14 @@
     <h1 id="title"></h1>
     
     <p>Filter op catagory</p>
-    <select id="productFilter" onchange="FilterProducts('productFilter', '1');">
+    <select id="productFilter" onchange="FilterProducts('productFilter', '3');">
       <option value="" selected="selected"></option>
-      <option value="Catagory1">Catagory1</option>
-      <option value="Catagory2">Catagory2</option>
+      @foreach($catagories as $catagory)
+      <option value="{{$catagory->title}}"><?php echo $catagory->title?></option>
+      @endforeach
     </select>
 
-    <table class="table table-striped">
+    <table id="table" class="table table-striped">
     <thead>
       <tr>
         <th>ID</th>
@@ -45,4 +46,5 @@
     </table>
     <th><a href="{{ route('product.create') }}">Add new product</a></th>
 </div>
+<script type="text/javascript" src="{{ URL::asset('js/javascript.js') }}"></script>
 @endsection

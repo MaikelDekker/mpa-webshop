@@ -32,8 +32,13 @@
       <div class="row">
         <div class="col-md-4"></div>
         <div class="form-group col-md-4">
-          <label for="catagory">Catagory</label>
-          <input type="text" class="form-control" name="catagory" value="{{$product->catagory}}">
+          <label for="catagory">Catagory</label><br>
+          <select id="productFilter" name="catagory" onchange="FilterProducts('productFilter', '1');">
+              <option selected="selected">{{$product->catagory}}</option>
+              @foreach($catagories as $catagory)
+              <option><?php echo $catagory->title?></option>
+              @endforeach
+          </select>
         </div>
       </div>
       <div class="row">
