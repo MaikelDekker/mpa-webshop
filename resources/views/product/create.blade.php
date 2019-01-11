@@ -32,11 +32,18 @@
           <div class="col-md-4"></div>
           <div class="form-group col-md-4">
             <label for="Catagory">catagory:</label><br>
-            <select id="productFilter" name="catagory" onchange="FilterProducts('productFilter', '1');">
+            <select id="productFilter" name="catagory">
               @foreach($catagories as $catagory)
               <option><?php echo $catagory->title?></option>
               @endforeach
             </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4"></div>
+          <div class="form-group col-md-4">
+            <label for="Price">prijs:</label><br>
+            <input type="text" class="form-control" name="price">
           </div>
         </div>
         <div class="row">

@@ -2,84 +2,73 @@
 
 namespace App\Http\Controllers;
 
-use App\Cart;
+use App\Product;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        session_start();
+        $products = request()->session()->get('cart');
+        if($products == null || $products == "array(0) { }")
+        {
+            request()->session()->forget('cart');
+        }
+        return view('cart.index',compact('products'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function addToCart($id)
     {
-        //
+        session_start();
+        $product = \App\Product::find($id);
+        $addedToCart = false;
+        $cart = request()->session()->get('cart');
+        foreach((object)$cart as $productInCart)
+        {
+            if($productInCart->id == $id)
+            {
+                $productInCart->amount++;
+                $addedToCart = true;
+            }
+        }
+        if($addedToCart == false)
+        {
+            request()->session()->push('cart', $product);
+        }
+        return redirect()->route('product.index');
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function show($id)
     {
-        //
+
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Cart  $cart
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Cart $cart)
+    public function edit($id)
     {
-        //
+
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Cart  $cart
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Cart $cart)
+    public function updateCart(Request $request, $id)
     {
-        //
+        session_start();
+        $cart = request()->session()->get('cart');
+        foreach((object)$cart as $productInCart)
+        {
+            if($productInCart->id == $id)
+            {
+                $productInCart->amount = $amount;
+            }
+        }
+        return redirect('cart');
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Cart  $cart
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Cart $cart)
+    public function removeFromCart($id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Cart  $cart
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Cart $cart)
-    {
-        //
+        session_start();
+        $cart = request()->session()->get('cart');
+        foreach((object)$cart as $key => $productInCart)
+        {
+            if($productInCart->id == $id)
+            {
+                request()->session()->pull('cart.'.$key, 'default');
+            }
+        }
+        return redirect('cart');
     }
 }

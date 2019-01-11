@@ -11,7 +11,8 @@ class ProductController extends Controller
     {
         $products=\App\Product::all();
         $catagories=\App\Catagory::all();
-        return view('product.index',compact('products', 'catagories'));
+        $cart = request()->session()->get('cart');
+        return view('product.index',compact('products', 'catagories', 'cart'));
     }
     public function create()
     {
@@ -24,12 +25,15 @@ class ProductController extends Controller
             'title' => 'required',
             'description' => 'required',
             'catagory' => 'required',
+            'price' => 'required',
         ]);
         $product= new \App\Product;
         $product->title=$request->get('title');
         $product->description=$request->get('description');
         $product->catagory=$request->get('catagory');
-        $product->save();       
+        $product->price=$request->get('price');
+        $product->amount=1;
+        $product->save();
         return redirect()->route('product.index');
     }
     public function show($id)
@@ -55,6 +59,7 @@ class ProductController extends Controller
         $product->title=$request->get('title');
         $product->description=$request->get('description');
         $product->catagory=$request->get('catagory');
+        $product->price=$request->get('price');
         $product->save();
         return redirect()->route('product.index');
     }
