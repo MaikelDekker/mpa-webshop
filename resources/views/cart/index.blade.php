@@ -5,6 +5,7 @@
     <h1 id="title"></h1>
 
     <h2>Producten in winkelwagen</h2>
+    @if($products != null)
     <table id="table" class="table table-striped">
     <thead>
       <tr>
@@ -16,25 +17,26 @@
       </tr>
     </thead>
       <tbody id="cartProducts">
-        @if($products != null)
         @foreach($products as $product)
             <tr>
                 <td>{{$product->title}}</td>
                 <td>{{$product->catagory}}</td>
                 <td><input type="number" name="amount" value="{{$product->amount}}">
                 <a href="{{action('CartController@updateCart', $product['id'])}}" style="margin-left:20px;" class="btn btn-warning">Update</a></td>
-                <td>{{$product->price}}</td>
+                <td>${{$product->price}}</td>
                 <td><a href="{{action('CartController@removeFromCart', $product['id'])}}" class="btn btn-danger">Verwijderen</a></td>
             </tr>
         @endforeach
-        @endif
         <tr>
-            <td>Totale prijs:</td>
             <td></td>
             <td></td>
             <td></td>
+            <td>Totale prijs: ${{$totalPrice}}</td>
             <td><a href="{{action('OrderController@create')}}" class="btn btn-success">Plaats bestelling</a></td>
         </tr>
+        @else
+        <br><p>Uw winkelwagen is leeg!</p>
+        @endif
       </tbody>
     </table>
 </div>

@@ -43,7 +43,10 @@
                                 <a class="nav-link" href="{{ url('/product') }}">{{ __('Products') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" style="margin-right:20px;" href="{{ url('/cart') }}">{{ __('Cart') }}</a>
+                                <a class="nav-link" href="{{ url('/cart') }}">{{ __('Cart') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" style="margin-right:20px;" href="{{ url('/order') }}">{{ __('Orders') }}</a>
                             </li>
                         @guest
                             <li class="nav-item">

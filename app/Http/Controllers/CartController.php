@@ -11,11 +11,17 @@ class CartController extends Controller
     {
         session_start();
         $products = request()->session()->get('cart');
+        $totalPrice = 0;
         if($products == null || $products == "array(0) { }")
         {
             request()->session()->forget('cart');
+        }else {
+            foreach($products as $product)
+            {
+                $totalPrice = $totalPrice + ($product->amount * $product->price);
+            }
         }
-        return view('cart.index',compact('products'));
+        return view('cart.index',compact('products', 'totalPrice'));
     }
     public function addToCart($id)
     {
