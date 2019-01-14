@@ -40,10 +40,10 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url('/product') }}">{{ __('Products') }}</a>
+                                <a class="nav-link" href="{{ url('/product') }}">{{ __('Producten') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url('/cart') }}">{{ __('Cart') }}</a>
+                                <a class="nav-link" href="{{ url('/cart') }}">{{ __('Winkelwagen') }}</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" style="margin-right:20px;" href="{{ url('/order') }}">{{ __('Orders') }}</a>
@@ -54,7 +54,7 @@
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" style="margin-right:20px;" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" style="margin-right:20px;" href="{{ route('register') }}">{{ __('Registreren') }}</a>
                                 </li>
                             @endif
                         @else

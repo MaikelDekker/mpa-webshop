@@ -11,8 +11,7 @@ class ProductController extends Controller
     {
         $products=\App\Product::all();
         $catagories=\App\Catagory::all();
-        $cart = request()->session()->get('cart');
-        return view('product.index',compact('products', 'catagories', 'cart'));
+        return view('product.index',compact('products', 'catagories'));
     }
     public function create()
     {
@@ -39,7 +38,6 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = \App\Product::find($id);
-
         return view('product.show',compact('product', 'id'));
     }
     public function edit($id)
@@ -54,6 +52,7 @@ class ProductController extends Controller
             'title' => 'required',
             'description' => 'required',
             'catagory' => 'required',
+            'price' => 'required',
         ]);
         $product= \App\Product::find($id);
         $product->title=$request->get('title');
@@ -66,7 +65,6 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = \App\Product::find($id);
-
         $product->delete();
         return redirect()->route('product.index');
     }

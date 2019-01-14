@@ -7,34 +7,41 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
+    //Get products from session variable 'cart'. If the cart variable(products in cart) is not empty, calculate the total price.
     public function index()
     {
-        session_start();
-        $products = request()->session()->get('cart');
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
         $totalPrice = 0;
-        if($products == null || $products == "array(0) { }")
+        $productsInCart = request()->session()->get('cart');
+        if($productsInCart != null && $productsInCart != "array(0) { }")
         {
-            request()->session()->forget('cart');
-        }else {
-            foreach($products as $product)
+            foreach($productsInCart as $productInCart)
             {
-                $totalPrice = $totalPrice + ($product->amount * $product->price);
+                $totalPrice = $totalPrice + ($productInCart->amount * $productInCart->price);
+                $productInCart->totalPrice = ($productInCart->price * $productInCart->amount);
             }
         }
-        return view('cart.index',compact('products', 'totalPrice'));
+        return view('cart.index',compact('productsInCart', 'totalPrice'));
     }
+    //Add product to cart if it doesn't exist in the cart yet. If it does exist, add one to the amount.
     public function addToCart($id)
     {
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
         $product = \App\Product::find($id);
         $addedToCart = false;
-        $cart = request()->session()->get('cart');
-        foreach((object)$cart as $productInCart)
-        {
-            if($productInCart->id == $id)
+        $productsInCart = request()->session()->get('cart');
+        if($productsInCart != null && $productsInCart != "array(0) { }"){
+            foreach($productsInCart as $productInCart)
             {
-                $productInCart->amount++;
-                $addedToCart = true;
+                if($productInCart->id == $id)
+                {
+                    $productInCart->amount++;
+                    $addedToCart = true;
+                }
             }
         }
         if($addedToCart == false)
@@ -43,32 +50,36 @@ class CartController extends Controller
         }
         return redirect()->route('product.index');
     }
-    public function show($id)
-    {
-
-    }
-    public function edit($id)
-    {
-
-    }
+    //Update the cart. Alter product amount according to entered value in amount input.
     public function updateCart(Request $request, $id)
     {
-        session_start();
-        $cart = request()->session()->get('cart');
-        foreach((object)$cart as $productInCart)
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        $productsInCart = request()->session()->get('cart');
+        foreach($productsInCart as $productInCart)
         {
             if($productInCart->id == $id)
             {
-                $productInCart->amount = $amount;
+                if($request->amount == 0 || $request->amount == '')
+                {
+                    $this->removeFromCart($id);
+                }else
+                {
+                    $productInCart->amount = $request->amount;
+                }
             }
         }
         return redirect('cart');
     }
+    //Remove product from the cart.
     public function removeFromCart($id)
     {
-        session_start();
-        $cart = request()->session()->get('cart');
-        foreach((object)$cart as $key => $productInCart)
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        $productsInCart = request()->session()->get('cart');
+        foreach($productsInCart as $key => $productInCart)
         {
             if($productInCart->id == $id)
             {

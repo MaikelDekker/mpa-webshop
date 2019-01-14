@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-      <h2>Product adder</h2><br/>
+      <h2>Product toevoegen</h2><br/>
       <form method="post" action="{{url('product')}}" enctype="multipart/form-data">
         @csrf
         @if ($errors->any())
@@ -17,24 +17,24 @@
         <div class="row">
           <div class="col-md-4"></div>
           <div class="form-group col-md-4">
-            <label for="Title">title:</label>
+            <label for="Title">Titel:</label>
             <input type="text" class="form-control" name="title">
           </div>
         </div>
         <div class="row">
           <div class="col-md-4"></div>
           <div class="form-group col-md-4">
-            <label for="Description">description:</label>
+            <label for="Description">Beschrijving:</label>
             <input type="text" class="form-control" name="description">
           </div>
         </div>
         <div class="row">
           <div class="col-md-4"></div>
           <div class="form-group col-md-4">
-            <label for="Catagory">catagory:</label><br>
+            <label for="Catagory">Categorie:</label><br>
             <select id="productFilter" name="catagory">
               @foreach($catagories as $catagory)
-              <option><?php echo $catagory->title?></option>
+              <option>{{$catagory->title}}</option>
               @endforeach
             </select>
           </div>
@@ -42,7 +42,7 @@
         <div class="row">
           <div class="col-md-4"></div>
           <div class="form-group col-md-4">
-            <label for="Price">prijs:</label><br>
+            <label for="Price">Prijs:</label><br>
             <input type="text" class="form-control" name="price">
           </div>
         </div>

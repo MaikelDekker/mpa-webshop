@@ -2,7 +2,7 @@
 
 @section('content')
   <div class="container">
-    <h2>Edit A Form</h2><br  />
+    <h2>Product bewerken</h2><br  />
       <form method="post" action="{{action('ProductController@update', $id)}}">
       @csrf
       @if ($errors->any())
@@ -18,25 +18,25 @@
       <div class="row">
         <div class="col-md-4"></div>
         <div class="form-group col-md-4">
-          <label for="title">title</label>
+          <label for="title">Titel</label>
           <input type="text" class="form-control" name="title" value="{{$product->title}}">
         </div>
       </div>
       <div class="row">
         <div class="col-md-4"></div>
         <div class="form-group col-md-4">
-          <label for="description">Description</label>
+          <label for="description">Beschrijving</label>
           <input type="text" class="form-control" name="description" value="{{$product->description}}">
         </div>
       </div>
       <div class="row">
         <div class="col-md-4"></div>
         <div class="form-group col-md-4">
-          <label for="catagory">Catagory</label><br>
+          <label for="catagory">Categorie</label><br>
           <select id="productFilter" name="catagory">
               <option selected="selected">{{$product->catagory}}</option>
               @foreach($catagories as $catagory)
-              <option><?php echo $catagory->title?></option>
+              <option>{{$catagory->title}}</option>
               @endforeach
           </select>
         </div>
@@ -44,7 +44,7 @@
       <div class="row">
         <div class="col-md-4"></div>
         <div class="form-group col-md-4">
-          <label for="price">Price</label>
+          <label for="price">Prijs</label>
           <input type="text" class="form-control" name="price" value="{{$product->price}}">
         </div>
       </div>

@@ -12,21 +12,17 @@
     <table id="table" class="table table-striped">
     <thead>
       <tr>
-        <th>id</th>
-        <th>order</th>
-        <th>titel</th>
-        <th>amount</th>
-        <th>price</th>
+        <th>Naam</th>
+        <th>Hoeveelheid</th>
+        <th>Prijs</th>
       </tr>
     </thead>
       <tbody>
-        @foreach($orderDetails as $orderDetail)
+        @foreach($orderProducts as $orderProduct)
             <tr>
-                <td>{{$orderDetail->id}}</td>
-                <td>{{$orderDetail->orderID}}</td>
-                <td>{{$orderDetail->title}}</td>
-                <td>{{$orderDetail->amount}}</td>
-                <td>${{$orderDetail->price}}</td>
+                <td>{{$orderProduct->title}}</td>
+                <td>{{$orderProduct->amount}}</td>
+                <td>${{$orderProduct->price}}</td>
             </tr>
         @endforeach
         <td>Totale prijs: ${{$totalPrice}}</td>

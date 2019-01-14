@@ -11,18 +11,18 @@
     <table id="table" class="table table-striped">
     <thead>
       <tr>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Catagory</th>
+        <th>Titel</th>
+        <th>Beschrijving</th>
+        <th>Categorie</th>
         <th>Prijs</th>
       </tr>
     </thead>
       <tbody>
         <tr>
-          <td><?php echo $product->title ?></td>
-          <td><?php echo $product->description ?></td>
-          <td><?php echo $product->catagory ?></td>
-          <td><?php echo $product->price ?></td>
+          <td>{{$product->title}}</td>
+          <td>{{$product->description}}</td>
+          <td>{{$product->catagory}}</td>
+          <td>${{$product->price}}</td>
         </tr>
       </tbody>
     </table>

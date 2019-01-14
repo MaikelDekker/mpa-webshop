@@ -24,7 +24,7 @@ Route::resource('order', 'OrderController');
 
 Route::get('/cart', 'CartController@index')->name('home');
 Route::get('/cart/add/{id}', 'CartController@addToCart');
-Route::get('/cart/update/{id}', 'CartController@updateCart');
+Route::post('/cart/update/{id}', 'CartController@updateCart');
 Route::get('/cart/delete/{id}', 'CartController@removeFromCart');
 
 Route::get('/home', 'HomeController@index')->name('home');

@@ -5,26 +5,38 @@
     <h1 id="title"></h1>
 
     <h2>Producten in winkelwagen</h2>
-    @if($products != null)
+    @if($productsInCart != null)
     <table id="table" class="table table-striped">
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Catagory</th>
-        <th>Amount</th>
-        <th>Price</th>
-        <th colspan="1">Action</th>
+        <th>Naam</th>
+        <th>Catagorie</th>
+        <th>Hoeveelheid</th>
+        <th>Prijs</th>
+        <th colspan="1">Actie</th>
       </tr>
     </thead>
       <tbody id="cartProducts">
-        @foreach($products as $product)
+        @foreach($productsInCart as $productInCart)
             <tr>
-                <td>{{$product->title}}</td>
-                <td>{{$product->catagory}}</td>
-                <td><input type="number" name="amount" value="{{$product->amount}}">
-                <a href="{{action('CartController@updateCart', $product['id'])}}" style="margin-left:20px;" class="btn btn-warning">Update</a></td>
-                <td>${{$product->price}}</td>
-                <td><a href="{{action('CartController@removeFromCart', $product['id'])}}" class="btn btn-danger">Verwijderen</a></td>
+                <td>{{$productInCart->title}}</td>
+                <td>{{$productInCart->catagory}}</td>
+                <td><form method="post" action="{{action('CartController@updateCart', $productInCart->id)}}" enctype="multipart/form-data">
+                    @csrf
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <input type="number" name="amount" value="{{$productInCart->amount}}">
+                    <button type="submit" class="btn btn-success">Update</button>
+                    </form></td>
+                <td>${{$productInCart->totalPrice}} (${{$productInCart->price}} per stuk)</td>
+                <td><a href="{{action('CartController@removeFromCart', $productInCart->id)}}" class="btn btn-danger">Verwijderen</a></td>
             </tr>
         @endforeach
         <tr>

@@ -8,6 +8,7 @@ use Auth;
 
 class OrderController extends Controller
 {
+    //If logged in, then get all orders of the current customer. If not logged in, redirect to login screen.
     public function index()
     {
         if(Auth::check()){
@@ -18,6 +19,7 @@ class OrderController extends Controller
             return redirect('login');
         }
     }
+    //If logged in, then create a new order and add all products that were in the cart to the order. If not logged in, redirect to login screen.
     public function create()
     {
         if(Auth::check()){
@@ -25,66 +27,30 @@ class OrderController extends Controller
             $order->customerID = Auth::id();
             $order->save();
 
-            $cart = request()->session()->get('cart');
-            foreach($cart as $productInCart)
+            $productsInCart = request()->session()->get('cart');
+            foreach($productsInCart as $productInCart)
             {
-                $product= new \App\OrderDetail;
-                $product->orderID = $order->id;
-                $product->title = $productInCart->title;
-                $product->amount = $productInCart->amount;
-                $product->price = $productInCart->price * $productInCart->amount;
-                $product->save();
+                $orderProduct= new \App\OrderProduct;
+                $orderProduct->orderID = $order->id;
+                $orderProduct->title = $productInCart->title;
+                $orderProduct->amount = $productInCart->amount;
+                $orderProduct->price = $productInCart->price * $productInCart->amount;
+                $orderProduct->save();
             }
-            return redirect()->route('product.index');
+            return redirect()->route('order.show', $order->id);
         }else
         {
             return redirect('login');
         }
     }
-    public function store(Request $request)
-    {
-        $order= new \App\Order;
-        $order->save();
-        return redirect()->route('order.index');
-    }
     public function show($id)
     {
-        $order = \App\Order::find($id);
-        $orderDetails = \App\OrderDetail::where('OrderID', $id)->get();
+        $orderProducts = \App\OrderProduct::where('OrderID', $id)->get();
         $totalPrice = 0;
-        foreach($orderDetails as $orderDetail)
+        foreach($orderProducts as $orderProduct)
         {
-            $totalPrice = $totalPrice + $orderDetail->price;
+            $totalPrice = $totalPrice + $orderProduct->price;
         }
-
-        return view('order.show',compact('order', 'id', 'orderDetails', 'totalPrice'));
-    }
-    public function edit($id)
-    {
-        $order = \App\Order::find($id);
-        $catagories=\App\Catagory::all();
-        return view('order.edit',compact('order', 'catagories', 'id'));
-    }
-    public function update(Request $request, $id)
-    {
-        $validatedData = $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'catagory' => 'required',
-        ]);
-        $order= \App\Order::find($id);
-        $order->title=$request->get('title');
-        $order->description=$request->get('description');
-        $order->catagory=$request->get('catagory');
-        $order->price=$request->get('price');
-        $order->save();
-        return redirect()->route('order.index');
-    }
-    public function destroy($id)
-    {
-        $order = \App\Order::find($id);
-
-        $order->delete();
-        return redirect()->route('order.index');
+        return view('order.show',compact('orderProducts', 'totalPrice'));
     }
 }
