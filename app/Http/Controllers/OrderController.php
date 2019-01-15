@@ -12,7 +12,7 @@ class OrderController extends Controller
     public function index()
     {
         if(Auth::check()){
-            $orders = \App\Order::where('customerID', Auth::id())->get();
+            $orders = \App\Order::where('user_id', Auth::id())->get();
             return view('order.index',compact('orders'));
         }else
         {
@@ -24,14 +24,14 @@ class OrderController extends Controller
     {
         if(Auth::check()){
             $order= new \App\Order;
-            $order->customerID = Auth::id();
+            $order->user_id = Auth::id();
             $order->save();
 
             $productsInCart = request()->session()->get('cart');
             foreach($productsInCart as $productInCart)
             {
                 $orderProduct= new \App\OrderProduct;
-                $orderProduct->orderID = $order->id;
+                $orderProduct->order_id = $order->id;
                 $orderProduct->title = $productInCart->title;
                 $orderProduct->amount = $productInCart->amount;
                 $orderProduct->price = $productInCart->price * $productInCart->amount;
@@ -45,7 +45,7 @@ class OrderController extends Controller
     }
     public function show($id)
     {
-        $orderProducts = \App\OrderProduct::where('OrderID', $id)->get();
+        $orderProducts = \App\OrderProduct::where('order_id', $id)->get();
         $totalPrice = 0;
         foreach($orderProducts as $orderProduct)
         {
