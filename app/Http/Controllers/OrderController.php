@@ -32,11 +32,13 @@ class OrderController extends Controller
             {
                 $orderProduct= new \App\OrderProduct;
                 $orderProduct->order_id = $order->id;
+                $orderProduct->product_id = $productInCart->id;
                 $orderProduct->title = $productInCart->title;
                 $orderProduct->amount = $productInCart->amount;
                 $orderProduct->price = $productInCart->price * $productInCart->amount;
                 $orderProduct->save();
             }
+            request()->session()->forget('cart');
             return redirect()->route('order.show', $order->id);
         }else
         {
