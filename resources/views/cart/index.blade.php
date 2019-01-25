@@ -35,7 +35,7 @@
                     <input type="number" name="amount" value="{{$productInCart->amount}}">
                     <button type="submit" class="btn btn-success">Update</button>
                     </form></td>
-                <td>${{$productInCart->totalPrice}} (${{$productInCart->price}} per stuk)</td>
+                <td>${{number_format($productInCart->totalPrice, 2)}} (${{$productInCart->price}} per stuk)</td>
                 <td><a href="{{action('CartController@removeFromCart', $productInCart->id)}}" class="btn btn-danger">Verwijderen</a></td>
             </tr>
         @endforeach
@@ -43,7 +43,7 @@
             <td></td>
             <td></td>
             <td></td>
-            <td>Totale prijs: ${{$totalPrice}}</td>
+            <td>Totale prijs: ${{number_format($totalPrice, 2)}}</td>
             <td><a href="{{action('OrderController@create')}}" class="btn btn-success">Plaats bestelling</a></td>
         </tr>
         @else

@@ -6,7 +6,7 @@
 
     <h2>Producten</h2><br>
     <p>Filter op categorie</p>
-    <select id="productFilter" onchange="FilterProducts('productFilter', '3');">
+    <select id="productFilter" onchange="FilterProducts('productFilter', '2');">
       <option value="" selected="selected"></option>
       @foreach($catagories as $catagory)
       <option value="{{$catagory->title}}">{{$catagory->title}}</option>

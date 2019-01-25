@@ -19,10 +19,9 @@ Auth::routes();
 
 
 Route::resource('product', 'ProductController');
-Route::resource('cart', 'CartController');
 Route::resource('order', 'OrderController');
 
-Route::get('/cart', 'CartController@index')->name('home');
+Route::get('/cart', 'CartController@index');
 Route::get('/cart/add/{id}', 'CartController@addToCart');
 Route::post('/cart/update/{id}', 'CartController@updateCart');
 Route::get('/cart/delete/{id}', 'CartController@removeFromCart');

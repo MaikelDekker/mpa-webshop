@@ -19,7 +19,7 @@ class OrderController extends Controller
             return redirect('login');
         }
     }
-    //If logged in, then create a new order and add all products that were in the cart to the order. If not logged in, redirect to login screen.
+    //If logged in, then create a new order, add all products that were in the cart to the order and forget the cart. If not logged in, redirect to login screen.
     public function create()
     {
         if(Auth::check()){
@@ -45,6 +45,7 @@ class OrderController extends Controller
             return redirect('login');
         }
     }
+    //show order and calculate total price
     public function show($id)
     {
         $orderProducts = \App\OrderProduct::where('order_id', $id)->get();
