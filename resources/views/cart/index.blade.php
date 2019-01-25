@@ -32,7 +32,7 @@
                             </ul>
                         </div>
                     @endif
-                    <input type="number" name="amount" value="{{$productInCart->amount}}">
+                    <input type="number" min="0" name="amount" value="{{$productInCart->amount}}">
                     <button type="submit" class="btn btn-success">Update</button>
                     </form></td>
                 <td>${{number_format($productInCart->totalPrice, 2)}} (${{$productInCart->price}} per stuk)</td>

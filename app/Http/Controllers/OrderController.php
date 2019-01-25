@@ -35,7 +35,7 @@ class OrderController extends Controller
                 $orderProduct->product_id = $productInCart->id;
                 $orderProduct->title = $productInCart->title;
                 $orderProduct->amount = $productInCart->amount;
-                $orderProduct->price = $productInCart->price * $productInCart->amount;
+                $orderProduct->price = number_format($productInCart->price * $productInCart->amount, 2);
                 $orderProduct->save();
             }
             request()->session()->forget('cart');
@@ -54,6 +54,7 @@ class OrderController extends Controller
         {
             $totalPrice = $totalPrice + $orderProduct->price;
         }
+        $totalPrice = number_format($totalPrice, 2);
         return view('order.show',compact('orderProducts', 'totalPrice'));
     }
 }

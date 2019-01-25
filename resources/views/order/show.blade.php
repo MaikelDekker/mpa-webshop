@@ -22,7 +22,7 @@
             <tr>
                 <td>{{$orderProduct->title}}</td>
                 <td>{{$orderProduct->amount}}</td>
-                <td>${{$orderProduct->price}}</td>
+                <td>${{$orderProduct->price}} (${{number_format(($orderProduct->price / $orderProduct->amount), 2)}} per stuk)</td>
             </tr>
         @endforeach
         <td>Totale prijs: ${{$totalPrice}}</td>

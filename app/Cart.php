@@ -48,7 +48,7 @@ class Cart extends Model
             request()->session()->push('cart', $product);
         }
     }
-    //Update the cart. Alter product amount according to entered value in amount input.
+    //Update the cart. Alter product amount according to the entered value in amount input.
     public function updateCart($request, $id)
     {
         if (session_status() == PHP_SESSION_NONE) {
@@ -59,7 +59,7 @@ class Cart extends Model
         {
             if($productInCart->id == $id)
             {
-                if($request->amount == 0 || $request->amount == '')
+                if($request->amount <= 0 || $request->amount == '')
                 {
                     $this->removeFromCart($id);
                 }else
